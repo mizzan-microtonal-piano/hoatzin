@@ -1,0 +1,6 @@
+(sym_lib_table
+  (lib (name "2022-06-13_00-55-18")(type "KiCad")(uri "${KIPRJMOD}/LIbrary/symbols/2-215079-0.kicad_sym")(options "")(descr ""))
+  (lib (name "USB-B-S-X-X-TH")(type "KiCad")(uri "${KIPRJMOD}/LIbrary/symbols/USB-B-S-X-X-TH.kicad_sym")(options "")(descr ""))
+  (lib (name "6N138S")(type "KiCad")(uri "${KIPRJMOD}/LIbrary/symbols/6N138S.kicad_sym")(options "")(descr ""))
+  (lib (name "292304-1")(type "KiCad")(uri "${KIPRJMOD}/LIbrary/symbols/292304-1.kicad_sym")(options "")(descr ""))
+)
