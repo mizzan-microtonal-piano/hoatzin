@@ -91,7 +91,7 @@
       (mirror false)
       (drillshape 0)
       (scaleselection 1)
-      (outputdirectory "Gerber/")
+      (outputdirectory "Docs/Gerber/")
     )
   )
 
@@ -51691,7 +51691,6 @@
         (xy 138.314444 59.847003)
         (xy 138.303923 59.838624)
         (xy 138.290535 59.845676)
-        (xy 136.96021 61.176)
         (xy 136.601 61.53521)
         (xy 135.27174 62.864471)
         (xy 135.26445 62.877822)
