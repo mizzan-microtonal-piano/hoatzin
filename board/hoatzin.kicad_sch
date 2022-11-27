@@ -263,10 +263,10 @@
       (reference "D1") (unit 1) (value "1N4148W") (footprint "Diode_SMD:D_SOD-123")
     )
     (path "/afbb6b34-d17e-4b2d-85e1-26d09171c0ec/83fb8d95-e117-4c9b-8935-e582035f9c74"
-      (reference "D2") (unit 1) (value "BAT60AE6327H") (footprint "Diode_SMD:D_SOD-323")
+      (reference "D2") (unit 1) (value "BAT60AE6327HTSA1") (footprint "Diode_SMD:D_SOD-323")
     )
     (path "/4c72f16f-6f4e-44b3-a89d-a29559fa6a01/e177e022-3116-46a6-84cb-894374afb71d"
-      (reference "FB1") (unit 1) (value "GZ2012D601TF") (footprint "Inductor_SMD:L_0805_2012Metric")
+      (reference "FB1") (unit 1) (value "HZ0805E601R-10") (footprint "Inductor_SMD:L_0805_2012Metric")
     )
     (path "/27dc419e-6034-4cf0-a3b7-bf58ac2d78b6/933f0aed-f4d3-4121-a843-972f7cb7cea2/f4bd2f6c-ea9c-4e3b-81f0-fab40708a40b"
       (reference "H1") (unit 1) (value "MountingHole_Pad") (footprint "MountingHole:MountingHole_5.3mm_M5_DIN965_Pad")

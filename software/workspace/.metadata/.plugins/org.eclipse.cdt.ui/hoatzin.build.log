@@ -1,0 +1,10 @@
+12:23:15 **** Build of configuration Debug for project hoatzin ****
+make -j8 all 
+arm-none-eabi-size   hoatzin.elf 
+   text	   data	    bss	    dec	    hex	filename
+  41312	    628	  11788	  53728	   d1e0	hoatzin.elf
+Finished building: default.size.stdout
+ 
+
+12:23:16 Build Finished. 0 errors, 0 warnings. (took 1s.110ms)
+

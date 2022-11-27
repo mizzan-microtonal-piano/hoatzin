@@ -1,0 +1,63 @@
+/*
+ * fatar88keymap.h
+ *
+ *  Created on: Nov 25, 2022
+ *      Author: hr193
+ */
+
+#ifndef FATAR88KEYMAP_H_
+#define FATAR88KEYMAP_H_
+
+#include "stm32l476xx.h"
+
+
+#define K_L_T0	{GPIOD, GPIO_PIN_0}
+#define K_L_T1
+#define K_L_T2
+#define K_L_T3
+#define K_L_T4
+#define K_L_T5
+#define K_L_T6
+#define K_L_T7
+
+#define K_L_BR0
+#define K_L_BR1
+#define K_L_BR2
+#define K_L_BR3
+#define K_L_BR4
+
+#define K_L_MK0
+#define K_L_MK1
+#define K_L_MK2
+#define K_L_MK3
+#define K_L_MK4
+
+#define K_R_T0
+#define K_R_T1
+#define K_R_T2
+#define K_R_T3
+#define K_R_T4
+#define K_R_T5
+#define K_R_T6
+#define K_R_T7
+
+
+#define K_R_BR5
+#define K_R_BR6
+#define K_R_BR7
+#define K_R_BR8
+#define K_R_BR9
+#define K_R_BR10
+
+#define K_R_MK5
+#define K_R_MK6
+#define K_R_MK7
+#define K_R_MK8
+#define K_R_MK9
+#define K_R_MK10
+
+
+
+
+
+#endif /* FATAR88KEYMAP_H_ */
