@@ -1,0 +1,9 @@
+../Fatar/fatar_port.c:63:6:write_K_L_T	16	static
+../Fatar/fatar_port.c:67:6:write_K_R_T	16	static
+../Fatar/fatar_port.c:71:15:read_K_L_MK	16	static
+../Fatar/fatar_port.c:75:15:read_K_L_BR	16	static
+../Fatar/fatar_port.c:79:15:read_K_R_MK	16	static
+../Fatar/fatar_port.c:83:15:read_K_R_BR	16	static
+../Fatar/fatar_port.c:92:12:getVelocity	32	static
+../Fatar/fatar_port.c:109:6:scan_L_keys	48	static
+../Fatar/fatar_port.c:152:6:scan_R_keys	48	static

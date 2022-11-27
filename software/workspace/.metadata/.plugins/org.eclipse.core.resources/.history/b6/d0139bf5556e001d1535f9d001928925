@@ -1,0 +1,105 @@
+/*
+ * fatar_port.c
+ *
+ *  Created on: Nov 27, 2022
+ *      Author: hr193
+ */
+
+/* Includes ------------------------------------------------------------------*/
+#include "stm32l4xx_hal.h"
+
+
+
+GPIO_TypeDef * K_L_T_PORT[] = {GPIOB,GPIOB,GPIOC,GPIOC,GPIOA,GPIOA,GPIOA,GPIOA };
+uint16_t K_L_T_PIN[] = {GPIO_PIN_1,GPIO_PIN_0,GPIO_PIN_5,GPIO_PIN_4,GPIO_PIN_7,GPIO_PIN_6,GPIO_PIN_5,GPIO_PIN_4};
+
+GPIO_TypeDef * K_L_MK_PORT[] = {GPIOB,GPIOB,GPIOC,GPIOC,GPIOA};
+uint16_t K_L_MK_PIN[] = {GPIO_PIN_6,GPIO_PIN_8,GPIO_PIN_13,GPIO_PIN_15,GPIO_PIN_1};
+
+GPIO_TypeDef * K_L_BR_PORT[] = {GPIOB,GPIOB,GPIOB,GPIOC, GPIOA};
+uint16_t K_L_BR_PIN[] = {GPIO_PIN_5,GPIO_PIN_7,GPIO_PIN_9,GPIO_PIN_14,GPIO_PIN_0};
+
+GPIO_TypeDef * K_R_T_PORT[] = {GPIOC,GPIOC, GPIOC, GPIOB,GPIOB,GPIOB,GPIOB,GPIOB};
+uint16_t K_R_T_PIN[] = {GPIO_PIN_8,GPIO_PIN_7,GPIO_PIN_6,GPIO_PIN_15,GPIO_PIN_14,GPIO_PIN_13,GPIO_PIN_12,GPIO_PIN_11};
+
+GPIO_TypeDef * K_R_MK_PORT[] = {GPIOA,GPIOA,GPIOC,GPIOC, GPIOB,GPIOB};
+uint16_t K_R_MK_PIN[] = {GPIO_PIN_8,GPIO_PIN_10,GPIO_PIN_10,GPIO_PIN_12,GPIO_PIN_4,GPIO_PIN_10};
+
+GPIO_TypeDef * K_R_BR_PORT[] = {GPIOC,GPIOA,GPIOA,GPIOC,GPIOD,GPIOB};
+uint16_t K_R_BR_PIN[] = {GPIO_PIN_9,GPIO_PIN_9,GPIO_PIN_15,GPIO_PIN_11,GPIO_PIN_2,GPIO_PIN_2};
+
+
+void write_K_L_T(int index, int val){
+	HAL_GPIO_WritePin(K_L_T_PORT[index], K_L_T_PIN[index],  val);
+}
+
+void write_K_T_T(int index, int val){
+	HAL_GPIO_WritePin(K_R_T_PORT[index], K_R_T_PIN[index],  val);
+}
+
+int read_K_L_MK(int index){
+	HAL_GPIO_ReadPin(K_L_MK_PORT[index], K_L_MK_PIN[index]);
+}
+
+int read_K_L_BK(int index){
+	HAL_GPIO_ReadPin(K_L_BK_PORT[index], K_L_BK_PIN[index]);
+}
+
+int read_K_R_MK(int index){
+	HAL_GPIO_ReadPin(K_R_MK_PORT[index], K_R_MK_PIN[index]);
+}
+
+int read_K_R_BK(int index){
+	HAL_GPIO_ReadPin(K_R_BK_PORT[index], K_R_BK_PIN[index]);
+}
+
+
+
+/*
+
+#define K_L_T0		{GPIOB, GPIO_PIN_1}
+#define K_L_T1 		{GPIOB, GPIO_PIN_0}
+#define K_L_T2		{GPIOC, GPIO_PIN_5}
+#define K_L_T3		{GPIOC, GPIO_PIN_4}
+#define K_L_T4		{GPIOA, GPIO_PIN_7}
+#define K_L_T5		{GPIOA, GPIO_PIN_6}
+#define K_L_T6		{GPIOA, GPIO_PIN_5}
+#define K_L_T7		{GPIOA, GPIO_PIN_4}
+
+#define K_L_BR0		{GPIOB, GPIO_PIN_6}
+#define K_L_BR1		{GPIOB, GPIO_PIN_8}
+#define K_L_BR2		{GPIOC, GPIO_PIN_13}
+#define K_L_BR3		{GPIOC, GPIO_PIN_15}
+#define K_L_BR4		{GPIOA, GPIO_PIN_1}
+
+#define K_L_MK0		{GPIOB, GPIO_PIN_5}
+#define K_L_MK1		{GPIOB, GPIO_PIN_7}
+#define K_L_MK2		{GPIOB, GPIO_PIN_9}
+#define K_L_MK3		{GPIOC, GPIO_PIN_14}
+#define K_L_MK4		{GPIOA, GPIO_PIN_0}
+
+#define K_R_T0		{GPIOC, GPIO_PIN_8}
+#define K_R_T1		{GPIOC, GPIO_PIN_7}
+#define K_R_T2		{GPIOC, GPIO_PIN_6}
+#define K_R_T3		{GPIOB, GPIO_PIN_15}
+#define K_R_T4		{GPIOB, GPIO_PIN_14}
+#define K_R_T5		{GPIOB, GPIO_PIN_13}
+#define K_R_T6		{GPIOB, GPIO_PIN_12}
+#define K_R_T7		{GPIOB, GPIO_PIN_11}
+
+#define K_R_BR5		{GPIOA, GPIO_PIN_8}
+#define K_R_BR6		{GPIOA, GPIO_PIN_10}
+#define K_R_BR7		{GPIOC, GPIO_PIN_10}
+#define K_R_BR8		{GPIOC, GPIO_PIN_12}
+#define K_R_BR9		{GPIOB, GPIO_PIN_4}
+#define K_R_BR10	{GPIOB, GPIO_PIN_10}
+
+#define K_R_MK5		{GPIOC, GPIO_PIN_9}
+#define K_R_MK6		{GPIOA, GPIO_PIN_9}
+#define K_R_MK7		{GPIOA, GPIO_PIN_15}
+#define K_R_MK8		{GPIOC, GPIO_PIN_11}
+#define K_R_MK9		{GPIOD, GPIO_PIN_2}
+#define K_R_MK10	{GPIOB, GPIO_PIN_2}
+
+
+*/
