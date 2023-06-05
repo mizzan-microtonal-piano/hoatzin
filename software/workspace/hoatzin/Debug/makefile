@@ -11,6 +11,7 @@ RM := rm -rf
 -include sources.mk
 -include USB_DEVICE/Target/subdir.mk
 -include USB_DEVICE/App/subdir.mk
+-include Pedals/src/subdir.mk
 -include Middlewares/ST/STM32_USB_Device_Library/Core/Src/subdir.mk
 -include Middlewares/ST/STM32_USB_Device_Library/Class/MIDI/Src/subdir.mk
 -include Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/subdir.mk

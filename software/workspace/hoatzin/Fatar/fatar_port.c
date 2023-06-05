@@ -20,7 +20,7 @@ extern USBMIDI_t USBMIDI1;
 static int threshold = 500;
 
 /* Exponential Velocity response curves data*/
-static int expCurve[127] = {1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22, 23, 23, 24, 24, 25, 25, 26, 26, 27, 27, 28, 28, 29, 30, 30, 31, 32, 32, 33, 34, 35, 36, 37, 38, 40, 41, 43, 44, 46, 47, 49, 50, 52, 53, 55, 56, 58, 59, 61, 62, 64, 65, 67, 68, 70, 71, 73, 74, 76, 77, 79, 80, 82, 83, 85, 86, 88, 89, 91, 92, 94, 95, 97, 98, 100, 101, 103, 104, 106, 107, 109, 110, 112, 113, 115, 116, 118, 119, 121, 122, 124, 125, 127
+static int expCurve[127] = {1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22 , 23, 23, 24, 24, 25, 25, 26, 26, 27, 27, 28, 28, 29, 30, 30, 31, 32, 32, 33, 34, 35, 36, 37, 38, 40, 41, 43, 44, 46, 47, 49, 50, 52, 53, 55, 56, 58, 59, 61, 62, 64, 65, 67, 68, 70, 71, 73, 74, 76, 77, 79, 80, 82, 83, 85, 86, 88, 89, 91, 92, 94, 95, 97, 98, 100, 101, 103, 104, 106, 107, 109, 110, 112, 113, 115, 116, 118, 119, 121, 122, 124, 125, 127
  };
 
 /* Logarithmic Velocity response curves data*/
@@ -35,11 +35,11 @@ static int sCurve[127] =  {1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4,
 static int nCurve[127] = {10, 11, 12, 14, 15, 17, 18, 20, 21, 23, 24, 26, 27, 28, 29, 30, 31, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 43, 44, 45, 46, 46, 47, 40, 40, 49, 49, 50, 50, 51, 51, 51, 52, 52, 53, 53, 53, 54, 54, 54, 55, 55, 55, 56, 56, 56, 57, 57, 57, 57, 58, 58, 59, 59, 59, 60, 60, 60, 60, 61, 62, 62, 62, 62, 63, 63, 63, 63, 64, 64, 64, 65, 65, 66, 66, 67, 67, 67, 68, 69, 70, 71, 73, 74, 76, 78, 80, 81, 83, 85, 87, 90, 92, 93, 95, 97, 99, 101, 102, 104, 105, 107, 108, 110, 111, 113, 115, 116, 118, 119, 121, 122, 123, 125, 127, 127
 };
 
+static volatile uint32_t timestamp1[88];
+static volatile uint32_t timestamp2[88];
 
-static uint32_t timestamp1[88];
-static uint32_t timestamp2[88];
-
-
+int octaveShift = 0;
+int midiStartNoteNo  = 21;
 
 GPIO_TypeDef * K_L_T_PORT[] = {GPIOB,GPIOB,GPIOC,GPIOC,GPIOA,GPIOA,GPIOA,GPIOA };
 uint16_t K_L_T_PIN[] = {K_L_T0_Pin,K_L_T1_Pin,K_L_T2_Pin,K_L_T3_Pin,K_L_T4_Pin,K_L_T5_Pin,K_L_T6_Pin,K_L_T7_Pin};
@@ -58,7 +58,6 @@ uint16_t K_R_BR_PIN[] = {K_R_BR5_Pin,K_R_BR6_Pin,K_R_BR7_Pin,K_R_BR8_Pin,K_R_BR9
 
 GPIO_TypeDef * K_R_MK_PORT[] = {GPIOC,GPIOA,GPIOA,GPIOC,GPIOD,GPIOB};
 uint16_t K_R_MK_PIN[] = {K_R_MK5_Pin,K_R_MK6_Pin,K_R_MK7_Pin,K_R_MK8_Pin,K_R_MK9_Pin,K_R_MK10_Pin};
-
 
 void write_K_L_T(int index, GPIO_PinState val){
 	HAL_GPIO_WritePin(K_L_T_PORT[index], K_L_T_PIN[index],  val);
@@ -92,13 +91,12 @@ FATAR_KEY_STATUS_t keyStatus[88];
 static int getVelocity(int br_mr_time_ms){
 
 	int max_velocity = 127;
-	int min_velocity = 0; //lower end of the velocity in range 0 to 127
+	int min_velocity = 1; //lower end of the velocity in range 0 to 127
 
 	int time_ms = br_mr_time_ms;
 	if(time_ms > threshold) time_ms = threshold;
-	int velocity = max_velocity -  ( time_ms * (max_velocity - min_velocity) / (threshold - 0) );
-	velocity = nCurve[velocity];
-
+	int velocity = 127 - ( time_ms * (max_velocity - min_velocity) / (threshold - 0) );
+	velocity = nCurve[velocity-1];
 
 	return velocity;
 
@@ -129,8 +127,8 @@ void scan_L_keys(){
 				timestamp2[keyID] = HAL_GetTick();
 				int time_elapsed = timestamp2[keyID] - timestamp1[keyID];
 				int velocity = getVelocity(time_elapsed);
-				usbmidi_note_on(&USBMIDI1, CHANNEL_1 , 21 + keyID, velocity );
-				midi_note_on(&MIDI1, CHANNEL_1 , 21 + keyID, velocity );
+				usbmidi_note_on(&USBMIDI1, CHANNEL_1 , midiStartNoteNo + 12*octaveShift + keyID, velocity );
+				midi_note_on(&MIDI1, CHANNEL_1 , midiStartNoteNo + 12*octaveShift +  keyID, velocity );
 
 			}
 			else if( keyStatus[keyID] == MADE && currentKeyStat == BROKEN){
@@ -140,9 +138,10 @@ void scan_L_keys(){
 				timestamp2[keyID] = HAL_GetTick();
 				int time_elapsed = timestamp2[keyID] - timestamp1[keyID];
 				int velocity = getVelocity(time_elapsed);
-				usbmidi_note_off(&USBMIDI1, CHANNEL_1 , 21 + keyID, velocity );
-				midi_note_off(&MIDI1, CHANNEL_1 , 21 + keyID, velocity );
+				usbmidi_note_off(&USBMIDI1, CHANNEL_1 , midiStartNoteNo + 12*octaveShift + keyID, velocity );
+				midi_note_off(&MIDI1, CHANNEL_1 , midiStartNoteNo + 12*octaveShift + keyID, velocity );
 			}
+
 			keyStatus[keyID] = currentKeyStat;
 		}
 	}
@@ -172,9 +171,9 @@ void scan_R_keys(){
 				timestamp2[keyID] = HAL_GetTick();
 				int time_elapsed = timestamp2[keyID] - timestamp1[keyID];
 				int velocity = getVelocity(time_elapsed);
-				usbmidi_note_on(&USBMIDI1, CHANNEL_1 , 21 + keyID, velocity );
-				midi_note_on(&MIDI1, CHANNEL_1 , 21 + keyID, velocity );
-
+				usbmidi_note_on(&USBMIDI1, CHANNEL_1 , midiStartNoteNo + 12*octaveShift + keyID, velocity );
+				midi_note_on(&MIDI1, CHANNEL_1 , midiStartNoteNo + 12*octaveShift + keyID, velocity );
+				//printf("pressed at velocity %d and time is %d \r\n",velocity,time_elapsed );
 			}
 			else if( keyStatus[keyID] == MADE && currentKeyStat == BROKEN){
 				timestamp1[keyID] = HAL_GetTick();
@@ -183,10 +182,11 @@ void scan_R_keys(){
 				timestamp2[keyID] = HAL_GetTick();
 				int time_elapsed = timestamp2[keyID] - timestamp1[keyID];
 				int velocity = getVelocity(time_elapsed);
-				usbmidi_note_off(&USBMIDI1, CHANNEL_1 , 21 + keyID, velocity );
-				midi_note_off(&MIDI1, CHANNEL_1 , 21 + keyID, velocity );
-			}
 
+				usbmidi_note_off(&USBMIDI1, CHANNEL_1 , midiStartNoteNo + 12*octaveShift + keyID, velocity );
+				midi_note_off(&MIDI1, CHANNEL_1 , midiStartNoteNo + 12*octaveShift + keyID, velocity );
+				//printf("released at velocity %d and time is %d \r\n",velocity,time_elapsed );
+			}
 			keyStatus[keyID] = currentKeyStat;
 		}
 	}

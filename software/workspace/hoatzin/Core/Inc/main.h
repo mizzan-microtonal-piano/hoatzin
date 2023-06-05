@@ -139,6 +139,7 @@ void Error_Handler(void);
 #define K_L_BR1_GPIO_Port GPIOB
 #define K_L_MK2_Pin GPIO_PIN_9
 #define K_L_MK2_GPIO_Port GPIOB
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

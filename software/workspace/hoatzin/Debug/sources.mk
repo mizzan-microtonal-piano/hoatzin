@@ -9,6 +9,7 @@ S_SRCS :=
 C_SRCS := 
 S_UPPER_SRCS := 
 O_SRCS := 
+CYCLO_FILES := 
 OBJCOPY_HEX := 
 SIZE_OUTPUT := 
 OBJDUMP_LIST := 
@@ -31,6 +32,7 @@ MIDI/src \
 Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src \
 Middlewares/ST/STM32_USB_Device_Library/Class/MIDI/Src \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src \
+Pedals/src \
 USB_DEVICE/App \
 USB_DEVICE/Target \
 

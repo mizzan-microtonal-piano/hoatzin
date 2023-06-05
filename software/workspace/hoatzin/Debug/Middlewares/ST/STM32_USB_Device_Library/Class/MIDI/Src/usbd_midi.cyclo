@@ -1,0 +1,7 @@
+usbd_midi.c:99:16:USBD_MIDI_Init	1
+usbd_midi.c:107:16:USBD_MIDI_DeInit	1
+usbd_midi.c:114:16:USBD_MIDI_DataIn	2
+usbd_midi.c:122:17:USBD_MIDI_DataOut	1
+usbd_midi.c:137:6:USBD_MIDI_SendPacket	7
+usbd_midi.c:174:17:USBD_MIDI_GetCfgDesc	1
+usbd_midi.c:184:9:USBD_MIDI_RegisterInterface	2

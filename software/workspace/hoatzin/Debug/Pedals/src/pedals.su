@@ -1,0 +1,5 @@
+../Pedals/src/pedals.c:23:6:initializePedals	4	static
+../Pedals/src/pedals.c:26:5:readSustainPedal	8	static
+../Pedals/src/pedals.c:29:5:readSustenotoPedal	8	static
+../Pedals/src/pedals.c:32:5:readSoftPedal	8	static
+../Pedals/src/pedals.c:38:6:scanPedals	8	static

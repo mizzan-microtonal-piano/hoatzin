@@ -1,0 +1,2 @@
+usbd_midi_if.c:32:10:MIDI_DataRx	16
+usbd_midi_if.c:169:10:MIDI_DataTx	3

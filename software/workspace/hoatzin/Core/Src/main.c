@@ -27,7 +27,7 @@
 #include "usbd_midi_if.h"
 #include "midi.h"
 #include "usbmidi.h"
-
+#include "pedals.h"
 #include "fatar88keymap.h"
 #include <math.h>
 /* USER CODE END Includes */
@@ -110,45 +110,11 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int id = 5;
   while (1)
   {
-
 	  scan_L_keys();
 	  scan_R_keys();
-
-
-	  //write_K_L_T(0, 1);
-	  //HAL_Delay(1000);
-	  //write_K_L_T(0, 0);
-	  //HAL_Delay(1000);
-	  //int br = read_K_L_BR(1);
-	  //int mk = read_K_L_MK(1);
-
-	  //printf("br: %d       mk: %d\r\n", br,mk);
-	  //HAL_Delay(100);
-
-
-
-
-	  /*
-	  printf("TOCK Tock : %d\r\n", (int) HAL_GetTick() );
-
-	  write_K_R_T(id, 0);
-	  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,  GPIO_PIN_SET);
-	  usbmidi_note_on(&USBMIDI1, CHANNEL_1 , 0x55, 0x72 );
-	  midi_note_on(&MIDI1, CHANNEL_1 , 0x55, 0x72 );
-	  HAL_Delay(1000);
-
-	  write_K_R_T(id, 1);
-	  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0,  GPIO_PIN_RESET);
-	  usbmidi_note_off(&USBMIDI1, CHANNEL_1 , 0x55, 0x72 );
-	  midi_note_off(&MIDI1, CHANNEL_1 , 0x55, 0x72 );
-	  HAL_Delay(1000);
-	*/
-
-
-
+	  scanPedals();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -249,6 +215,8 @@ static void MX_USART2_UART_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -285,7 +253,7 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pins : TRS1_T_Pin TRS1_R_Pin TRS2_T_Pin */
   GPIO_InitStruct.Pin = TRS1_T_Pin|TRS1_R_Pin|TRS2_T_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : K_L_MK4_Pin K_L_BR4_Pin K_R_BR5_Pin K_R_MK6_Pin
@@ -335,6 +303,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(K_R_MK9_GPIO_Port, &GPIO_InitStruct);
 
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
