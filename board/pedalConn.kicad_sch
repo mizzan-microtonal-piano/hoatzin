@@ -338,7 +338,7 @@
   )
 
   (symbol (lib_id "Device:R") (at 85.09 119.38 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
+    (in_bom no) (on_board yes) (dnp yes)
     (uuid 04106ad6-154d-4903-88b0-0c340f30b122)
     (property "Reference" "R11" (at 82.55 120.65 90)
       (effects (font (size 1.27 1.27)))
@@ -407,7 +407,7 @@
   )
 
   (symbol (lib_id "Device:R") (at 168.91 119.38 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
+    (in_bom no) (on_board yes) (dnp yes)
     (uuid 2d43f8fe-833a-4102-b3d0-2429cb1ec340)
     (property "Reference" "R15" (at 166.37 120.65 90)
       (effects (font (size 1.27 1.27)))
@@ -535,7 +535,7 @@
   )
 
   (symbol (lib_id "Device:R") (at 90.17 119.38 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
+    (in_bom no) (on_board yes) (dnp yes)
     (uuid 472cf1dc-be97-47b6-a364-b87ec6f4dc2e)
     (property "Reference" "R13" (at 87.63 120.65 90)
       (effects (font (size 1.27 1.27)))
@@ -579,7 +579,7 @@
   )
 
   (symbol (lib_id "Device:R") (at 168.91 86.36 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
+    (in_bom no) (on_board yes) (dnp yes)
     (uuid 53b55690-f44a-4d27-9b24-d2275dacc1c9)
     (property "Reference" "R14" (at 166.37 87.63 90)
       (effects (font (size 1.27 1.27)))
@@ -732,7 +732,7 @@
   )
 
   (symbol (lib_id "Device:R") (at 90.17 86.36 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
+    (in_bom no) (on_board yes) (dnp yes)
     (uuid ba4b96d4-a4fa-4ceb-99ea-0aade32a96c0)
     (property "Reference" "R12" (at 87.63 87.63 90)
       (effects (font (size 1.27 1.27)))
@@ -826,7 +826,7 @@
   )
 
   (symbol (lib_id "Device:R") (at 85.09 86.36 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
+    (in_bom no) (on_board yes) (dnp yes)
     (uuid f043be0b-5704-4e43-9eff-9ad2f13a2812)
     (property "Reference" "R10" (at 82.55 87.63 90)
       (effects (font (size 1.27 1.27)))
