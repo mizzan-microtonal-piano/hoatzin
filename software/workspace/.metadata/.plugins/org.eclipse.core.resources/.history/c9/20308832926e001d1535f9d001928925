@@ -1,0 +1,173 @@
+/*
+ * fatar_port.c
+ *
+ *  Created on: Nov 27, 2022
+ *      Author: hr193
+ */
+
+/* Includes ------------------------------------------------------------------*/
+#include "stm32l4xx_hal.h"
+#include "main.h"
+#include "fatar_typedef.h"
+
+#include "midi.h"
+#include "usbmidi.h"
+
+extern MIDI_t MIDI1;
+extern USBMIDI_t USBMIDI1;
+
+
+static int threshold = 500;
+
+static uint32_t timestamp1[88];
+static uint32_t timestamp2[88];
+
+
+
+GPIO_TypeDef * K_L_T_PORT[] = {GPIOB,GPIOB,GPIOC,GPIOC,GPIOA,GPIOA,GPIOA,GPIOA };
+uint16_t K_L_T_PIN[] = {K_L_T0_Pin,K_L_T1_Pin,K_L_T2_Pin,K_L_T3_Pin,K_L_T4_Pin,K_L_T5_Pin,K_L_T6_Pin,K_L_T7_Pin};
+
+GPIO_TypeDef * K_L_BR_PORT[] = {GPIOB,GPIOB,GPIOC,GPIOC,GPIOA};
+uint16_t K_L_BR_PIN[] = {K_L_BR0_Pin,K_L_BR1_Pin,K_L_BR2_Pin,K_L_BR3_Pin,K_L_BR4_Pin};
+
+GPIO_TypeDef * K_L_MK_PORT[] = {GPIOB,GPIOB,GPIOB,GPIOC, GPIOA};
+uint16_t K_L_MK_PIN[] = {K_L_MK0_Pin,K_L_MK1_Pin,K_L_MK2_Pin,K_L_MK3_Pin,K_L_MK4_Pin};
+
+GPIO_TypeDef * K_R_T_PORT[] = {GPIOC,GPIOC, GPIOC, GPIOB,GPIOB,GPIOB,GPIOB,GPIOB};
+uint16_t K_R_T_PIN[] = {K_R_T0_Pin,K_R_T1_Pin,K_R_T2_Pin,K_R_T3_Pin,K_R_T4_Pin,K_R_T5_Pin,K_R_T6_Pin,K_R_T7_Pin};
+
+GPIO_TypeDef * K_R_BR_PORT[] = {GPIOA,GPIOA,GPIOC,GPIOC, GPIOB,GPIOB};
+uint16_t K_R_BR_PIN[] = {K_R_BR5_Pin,K_R_BR6_Pin,K_R_BR7_Pin,K_R_BR8_Pin,K_R_BR9_Pin,K_R_BR10_Pin};
+
+GPIO_TypeDef * K_R_MK_PORT[] = {GPIOC,GPIOA,GPIOA,GPIOC,GPIOD,GPIOB};
+uint16_t K_R_MK_PIN[] = {K_R_MK5_Pin,K_R_MK6_Pin,K_R_MK7_Pin,K_R_MK8_Pin,K_R_MK9_Pin,K_R_MK10_Pin};
+
+
+void write_K_L_T(int index, GPIO_PinState val){
+	HAL_GPIO_WritePin(K_L_T_PORT[index], K_L_T_PIN[index],  val);
+}
+
+void write_K_R_T(int index, GPIO_PinState val){
+	HAL_GPIO_WritePin(K_R_T_PORT[index], K_R_T_PIN[index],  val);
+}
+
+GPIO_PinState read_K_L_MK(int index){
+	return HAL_GPIO_ReadPin(K_L_MK_PORT[index], K_L_MK_PIN[index]);
+}
+
+GPIO_PinState read_K_L_BR(int index){
+	return HAL_GPIO_ReadPin(K_L_BR_PORT[index], K_L_BR_PIN[index]);
+}
+
+GPIO_PinState read_K_R_MK(int index){
+	return HAL_GPIO_ReadPin(K_R_MK_PORT[index], K_R_MK_PIN[index]);
+}
+
+GPIO_PinState read_K_R_BR(int index){
+	return HAL_GPIO_ReadPin(K_R_BR_PORT[index], K_R_BR_PIN[index]);
+}
+
+
+FATAR_KEY_STATUS_t keyStatus[88];
+
+
+
+static int getVelocity(int br_mr_time_ms){
+
+	int max_velocity = 127;
+	int min_velocity = 1; //lower end of the velocity in range 0 to 127
+
+	int time_ms = br_mr_time_ms;
+	if(time_ms > threshold) time_ms = threshold;
+	int velocity = max_velocity -  ( time_ms * (max_velocity - min_velocity) / (threshold - 0) );
+	return velocity;
+
+
+}
+
+
+void scan_L_keys(){
+	int i,j;
+
+	for(j=0;j<=7;j++){
+		for(i=0;i<=4;i++){
+			int keyID = i*8 + j;
+			write_K_L_T(j, 1);
+			int br = read_K_L_BR(i);
+			int mk = read_K_L_MK(i);
+			FATAR_KEY_STATUS_t currentKeyStat = 0;
+			write_K_L_T(j, 0);
+
+			if(br == 0  && mk == 0) currentKeyStat = UNPRESSED;
+			else if(br == 1  && mk == 0) currentKeyStat = BROKEN;
+			else if(br == 1  && mk == 1) currentKeyStat = MADE;
+
+			if( keyStatus[keyID] == UNPRESSED && currentKeyStat == BROKEN){
+				timestamp1[keyID] = HAL_GetTick();
+			}
+			else if( keyStatus[keyID] == BROKEN && currentKeyStat == MADE){
+				timestamp2[keyID] = HAL_GetTick();
+				int time_elapsed = timestamp2[keyID] - timestamp1[keyID];
+				int velocity = getVelocity(time_elapsed);
+				usbmidi_note_on(&USBMIDI1, CHANNEL_1 , 21 + keyID, velocity );
+				midi_note_on(&MIDI1, CHANNEL_1 , 21 + keyID, velocity );
+
+			}
+			else if( keyStatus[keyID] == MADE && currentKeyStat == BROKEN){
+				timestamp1[keyID] = HAL_GetTick();
+			}
+			else if( keyStatus[keyID] == BROKEN && currentKeyStat == UNPRESSED){
+				timestamp2[keyID] = HAL_GetTick();
+				int time_elapsed = timestamp2[keyID] - timestamp1[keyID];
+				int velocity = getVelocity(time_elapsed);
+				usbmidi_note_off(&USBMIDI1, CHANNEL_1 , 21 + keyID, velocity );
+				midi_note_off(&MIDI1, CHANNEL_1 , 21 + keyID, velocity );
+			}
+			keyStatus[keyID] = currentKeyStat;
+		}
+	}
+}
+
+
+void scan_R_keys(){
+	int i,j;
+
+	for(j=0;j<=7;j++){
+		for(i=0;i<=5;i++){
+			int keyID = 40 + i*8 + j;
+			write_K_R_T(j, 1);
+			int br = read_K_R_BR(i);
+			int mk = read_K_R_MK(i);
+			FATAR_KEY_STATUS_t currentKeyStat = 0;
+			write_K_R_T(j, 0);
+
+			if(br == 0  && mk == 0) currentKeyStat = UNPRESSED;
+			else if(br == 1  && mk == 0) currentKeyStat = BROKEN;
+			else if(br == 1  && mk == 1) currentKeyStat = MADE;
+
+			if( keyStatus[keyID] == UNPRESSED && currentKeyStat == BROKEN){
+				timestamp1[keyID] = HAL_GetTick();
+			}
+			else if( keyStatus[keyID] == BROKEN && currentKeyStat == MADE){
+				timestamp2[keyID] = HAL_GetTick();
+				int time_elapsed = timestamp2[keyID] - timestamp1[keyID];
+				int velocity = getVelocity(time_elapsed);
+				usbmidi_note_on(&USBMIDI1, CHANNEL_1 , 21 + keyID, velocity );
+				midi_note_on(&MIDI1, CHANNEL_1 , 21 + keyID, velocity );
+
+			}
+			else if( keyStatus[keyID] == MADE && currentKeyStat == BROKEN){
+				timestamp1[keyID] = HAL_GetTick();
+			}
+			else if( keyStatus[keyID] == BROKEN && currentKeyStat == UNPRESSED){
+				timestamp2[keyID] = HAL_GetTick();
+				int time_elapsed = timestamp2[keyID] - timestamp1[keyID];
+				int velocity = getVelocity(time_elapsed);
+				usbmidi_note_off(&USBMIDI1, CHANNEL_1 , 21 + keyID, velocity );
+				midi_note_off(&MIDI1, CHANNEL_1 , 21 + keyID, velocity );
+			}
+
+			keyStatus[keyID] = currentKeyStat;
+		}
+	}
+}

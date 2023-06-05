@@ -1,0 +1,65 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid 7df740c4-7396-4973-b091-33b55deb1d43)
+
+  (paper "A4")
+
+  (lib_symbols
+  )
+
+
+  (sheet (at 86.36 77.47) (size 38.1 21.59) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 27dc419e-6034-4cf0-a3b7-bf58ac2d78b6)
+    (property "Sheetname" "Connectors" (at 86.36 76.7584 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "connectors.kicad_sch" (at 86.36 99.6446 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "hoatzin"
+        (path "/7df740c4-7396-4973-b091-33b55deb1d43" (page "3"))
+      )
+    )
+  )
+
+  (sheet (at 132.08 77.47) (size 38.1 21.59) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid 4c72f16f-6f4e-44b3-a89d-a29559fa6a01)
+    (property "Sheetname" "MCU" (at 132.08 76.7584 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "mcu.kicad_sch" (at 132.08 99.6446 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "hoatzin"
+        (path "/7df740c4-7396-4973-b091-33b55deb1d43" (page "2"))
+      )
+    )
+  )
+
+  (sheet (at 177.8 77.47) (size 38.1 21.59) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid afbb6b34-d17e-4b2d-85e1-26d09171c0ec)
+    (property "Sheetname" "Power" (at 177.8 76.7584 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "power.kicad_sch" (at 177.8 99.6446 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "hoatzin"
+        (path "/7df740c4-7396-4973-b091-33b55deb1d43" (page "4"))
+      )
+    )
+  )
+
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+)

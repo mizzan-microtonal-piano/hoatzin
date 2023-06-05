@@ -1,0 +1,5 @@
+pedals.c:23:6:initializePedals	1
+pedals.c:26:5:readSustainPedal	1
+pedals.c:29:5:readSustenotoPedal	1
+pedals.c:32:5:readSoftPedal	1
+pedals.c:38:6:scanPedals	13

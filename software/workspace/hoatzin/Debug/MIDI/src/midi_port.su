@@ -1,0 +1,4 @@
+../MIDI/src/midi_port.c:43:10:_usbmidi_port_tx_bytes	16	static
+../MIDI/src/midi_port.c:52:10:_usbmidi_port_rx_bytes	16	static
+../MIDI/src/midi_port.c:58:10:_uartmidi_port_tx_bytes	16	static
+../MIDI/src/midi_port.c:62:10:_uartmidi_port_rx_bytes	16	static
